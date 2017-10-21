@@ -3,18 +3,19 @@ const mongoose = require('mongoose');
 const librarySchema = new mongoose.Schema({
 gameID: String,
 name: String,
-genres: Array,
+genres: [String],
 description: String,
 about: String,
 publisher: String,
 multiplayer: Boolean,
 score: Number,
 recommendations: Number,
-achievements: Array,
-stats: Array,
+achievements: [{achievement: String, achieved: Boolean, img: String}],
+stats: [{stat: String, value: Number}],
 banner: String,
-screenshots: Array
+screenshots: [String]
 });
+
 
 
 module.exports = mongoose.model('libraryPlayer', librarySchema);
