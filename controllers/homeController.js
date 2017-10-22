@@ -12,20 +12,42 @@ router.get("/", (req, res) => {
 
 
 
-router.get('/steam', function(req, res) {
-	// ?appid=440&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    // Calculate the Steam API URL we want to use
-    var url = 'https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key='+ process.env.API_KEY +'&steamid=76561197960434622&format=json';
-    request.get(url, function(error, steamHttpResponse) {
-        // Once we get the body of the steamHttpResponse, send it to our client
-        // as our own httpResponse
-        console.log(steamHttpResponse)
-        // httpResponse.setHeader('Content-Type', 'application/json');
-        // httpResponse.send(steamHttpBody);
-        res.send(steamHttpResponse.body)
+router.get("/steam", function(req, res) {
+
+    const libURL = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+ process.env.API_KEY +"&steamid=76561197960434622&format=json";
+    request.get(libURL, (err, returnedLibrary) => {
+
+        console.log(returnedLibrary)
+ 
+        const library = returnedLibrary.body
+        
+
+        const statsURL = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+ process.env.API_KEY +"&steamids=76561197960434622&format=json";
+	    		
+    		request.get(playerURL, (err, returnedStats) => {
+
+    			const stats = returnedStats.body
+    			
+    			for (let i=0; i < library.response.game_count - 1; i++) {
+    	
+        			const gameID = library.repsonse.games[i].appid
+        			const gameURL = "http://store.steampowered.com/api/appdetails/?appids=" + gameID
+        	
+        			request.get(gameURL, (err, returnedGame) => {
+
+
+    				})
+    			}
+
+    		})
+
+        res.send(returnedLibrary.body)
+
     });
 
-    
 });
+
+
+
 
 module.exports = router;
