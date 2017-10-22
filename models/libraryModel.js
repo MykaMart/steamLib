@@ -10,7 +10,7 @@ publisher: String,
 multiplayer: Boolean,
 score: Number,
 recommendations: Number,
-achievements: [{achievement: String, achieved: Boolean, img: String}],
+achievements: [{achievement: String, achieved: Boolean}],
 stats: [{stat: String, value: Number}],
 banner: String,
 screenshots: [String]
