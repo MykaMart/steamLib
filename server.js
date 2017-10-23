@@ -6,8 +6,8 @@ const https = require("https");
 require('./db/db')
 
 const friendController  = 	require('./controllers/friendController')
-const homeController  = 	require('./controllers/homeController')
-const libraryController  = 	require('./controllers/libraryController')
+const homeController  	=	require('./controllers/homeController')
+const libraryController = 	require('./controllers/libraryController')
 const playerController  = 	require('./controllers/playerController')
 
 app.set('view engine', 'ejs');
