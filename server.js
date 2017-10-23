@@ -5,6 +5,9 @@ const bodyParser     = require('body-parser');
 const https = require("https");
 
 const homeController  = require('./controllers/homeController')
+const libraryController = require('.controllers/libraryController')
+const friendsController = require('.controllers/friendsController')
+const playerController = require('.controllers/playerController')
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
