@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 
-const friendSchema = new mongoose.Schema({
-steamID: String
+const friendsSchema = new mongoose.Schema({
+steamID: String,
+avatar: String,
+library: [{game: String, banner: String}]
 });
 
 
-module.exports = mongoose.model('Friends', friendSchema);
+module.exports = mongoose.model('Friends', friendsSchema);
