@@ -3,8 +3,12 @@ const express = require("express");
 const app = express();
 const bodyParser     = require('body-parser');
 const https = require("https");
+require('./db/db')
 
-const homeController  = require('./controllers/homeController')
+const friendController  = 	require('./controllers/friendController')
+const homeController  = 	require('./controllers/homeController')
+const libraryController  = 	require('./controllers/libraryController')
+const playerController  = 	require('./controllers/playerController')
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
