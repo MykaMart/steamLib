@@ -18,4 +18,4 @@ screenshots: [String]
 
 
 
-module.exports = mongoose.model('libraryPlayer', librarySchema);
+module.exports = mongoose.model('Library', librarySchema);
