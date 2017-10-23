@@ -4,7 +4,7 @@ const request = require("request");
 
 const Library = require("../models/libraryModel.js")
 const Player = require("../models/playerModel.js")
-const Freinds = require("../models/friendsModel.js")
+const Friends = require("../models/friendsModel.js")
 
 router.get("/", (req, res) => {
 	res.render("index", {})
@@ -19,8 +19,9 @@ router.get("/user", function(req, res) { //brackets issue
     const libraryURL = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+ process.env.API_KEY +"&steamid=76561197960434622&format=json";
     
     request.get(libraryURL, (err, returnedLibrary) => { //brackets issue
-
+        console.log(___________________________________________________)
         console.log(returnedLibrary)
+        console.log(___________________________________________________)
  
         const libraryObject = returnedLibrary.body
 
@@ -31,6 +32,10 @@ router.get("/user", function(req, res) { //brackets issue
             const gameURL = "https://store.steampowered.com/api/appdetails/?appids=" + gameID
 
             request.get(gameURL, (err, returnedGame) => { 
+                
+                console.log(___________________________________________________)
+                console.log(returnedGame)
+                console.log(___________________________________________________)
 
                 const gameObject = returnedGame.body
 
@@ -68,6 +73,10 @@ router.get("/user", function(req, res) { //brackets issue
                 
                 request.get(statsURL, (err, returnedStats) => {
 
+                    console.log(___________________________________________________)
+                    console.log(returnedStats)
+                    console.log(___________________________________________________)
+
                     const statsObject = returnedStats.body
 
                     for (let i = 0; i < statsObject.playerstats.stats.length - 1; i++){
@@ -84,6 +93,10 @@ router.get("/user", function(req, res) { //brackets issue
                 const achievementsURL = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=440&key="+ process.env.API_KEY +"&steamid=76561197960434622&format=json"
 
                 request.get(achievementsURL, (err, returnedAchievements) => {
+
+                    console.log(___________________________________________________)
+                    console.log(returnedAchievements)
+                    console.log(___________________________________________________)
 
                     const acheivementsObject = returnedAchievements.body
 
@@ -102,6 +115,22 @@ router.get("/user", function(req, res) { //brackets issue
                 })
 
                 //Create Game and add to DB
+                console.log(___________________________________________________)
+                console.log(gameObject.300.data.steam_appid)
+                console.log(gameObject.300.data.name)
+                console.log(gameGenres)
+                console.log(gameObject.300.data.detailed_description)
+                console.log(gameObject.300.data.about_the_game)
+                console.log(gameObject.300.data.publishers[0])
+                console.log(gameMultiplayer)
+                console.log(gameObject.300.data.metacrititc.score)
+                console.log(gameObject.300.data.recommendations.total)
+                console.log(playerAchievements)
+                console.log(playerStats)
+                console.log(gameObject.300.data.header_image)
+                console.log(gameScreenshots)
+                console.log(___________________________________________________)
+
 
                 Library.create({
 
@@ -114,8 +143,8 @@ router.get("/user", function(req, res) { //brackets issue
                     multiplayer: gameMultiplayer,
                     score: gameObject.300.data.metacrititc.score,
                     recommendations: gameObject.300.data.recommendations.total,
-                    achievements: [playerAchievements],
-                    stats: [playerStats],
+                    achievements: playerAchievements,
+                    stats: playerStats,
                     banner: gameObject.300.data.header_image,
                     screenshots: gameScreenshots
                 })
@@ -129,6 +158,10 @@ router.get("/user", function(req, res) { //brackets issue
     const friendsListURL = "http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key="+ process.env.API_KEY +"&steamid=76561197960434622&relationship=friend&format=json"
 
     request.get(friendsListURL, (err, returnedFriends) => {
+
+        console.log(___________________________________________________)
+        console.log(returned)
+        console.log(___________________________________________________)
 
         const friendsListObject = returnedFriends.body
 
@@ -163,7 +196,15 @@ router.get("/user", function(req, res) { //brackets issue
 
                     request.get(gameURL, (err, returnedGame) => {
 
+                        console.log(___________________________________________________)
+                        console.log(returnedGame)
+                        console.log(___________________________________________________)
+
                         const gameObject = returnedGame.body
+
+                        console.log(gameObject.300.data.name)
+                        console.log(gameObject.300.data.header_image)
+
 
                         friendLibraryObject.push({
 
@@ -177,7 +218,12 @@ router.get("/user", function(req, res) { //brackets issue
              }
 
             //Create Friend and add to DB
-
+            console.log(___________________________________________________)
+            console.log(friendsListObject.friendslist.friends[i].steamid)
+            console.log(friendObject.repsonse.players[0].personaname)
+            console.log(friendLibaryObject)
+            console.log(___________________________________________________)
+            
             Friends.create({
 
                 steamID: friendsListObject.friendslist.friends[i].steamid,
