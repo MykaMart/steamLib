@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const bodyParser     = require('body-parser');
 const https = require("https");
+require('./db/db')
 
 const homeController  = require('./controllers/homeController')
 const libraryController = require('.controllers/libraryController')
