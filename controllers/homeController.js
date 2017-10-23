@@ -19,13 +19,14 @@ router.get("/user", function(req, res) { //brackets issue
     const libraryURL = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+ process.env.API_KEY +"&steamid=76561197960434622&format=json";
     
     request.get(libraryURL, (err, returnedLibrary) => { //brackets issue
-        console.log(___________________________________________________)
+        console.log("___________________________________________________")
         console.log(returnedLibrary)
-        console.log(___________________________________________________)
+        console.log("___________________________________________________")
  
         const libraryObject = returnedLibrary.body
 
         //Library Builder
+
         for (let i=0; i < libraryObject.response.game_count - 1; i++) { 
         
             const gameID = libraryObject.repsonse.games[i].appid
@@ -33,9 +34,9 @@ router.get("/user", function(req, res) { //brackets issue
 
             request.get(gameURL, (err, returnedGame) => { 
                 
-                console.log(___________________________________________________)
+                console.log("___________________________________________________")
                 console.log(returnedGame)
-                console.log(___________________________________________________)
+                console.log("___________________________________________________")
 
                 const gameObject = returnedGame.body
 
@@ -48,15 +49,15 @@ router.get("/user", function(req, res) { //brackets issue
                     //Genres
                     const gameGenres = []
 
-                    for (let i = 0; i < gameObject.300.data.genres.length - 1; i++){
-                        gameGenres.push(gameObject.300.data.genres[i].description)
+                    for (let i = 0; i < gameObject.gameID.data.genres.length - 1; i++){
+                        gameGenres.push(gameObject.gameID.data.genres[i].description)
                     }
 
                     //Multiplayer
                     const gameMultiplayer = false
 
-                    for (let i = 0; i < gameObject.300.data.categories.length - 1; i++){
-                        if (gameObject.300.data.categories[i].id === 1){
+                    for (let i = 0; i < gameObject.gameID.data.categories.length - 1; i++){
+                        if (gameObject.gameID.data.categories[i].id === 1){
                             gameMultiplayer = true
                         }
                     }
@@ -64,8 +65,8 @@ router.get("/user", function(req, res) { //brackets issue
                     //Screenshots
                     const gameScreenshots = []
 
-                    for (let i = 0 < gameObject.300.data.screenshots.length -1; i++){
-                        gameScreenshots.push(gameObject.300.data.screenshots[i].path_thumbnail)
+                    for (let i = 0; i < gameObject.gameID.data.screenshots.length -1; i++){
+                        gameScreenshots.push(gameObject.gameID.data.screenshots[i].path_thumbnail)
                     }
 
                 //Stats call
@@ -73,9 +74,9 @@ router.get("/user", function(req, res) { //brackets issue
                 
                 request.get(statsURL, (err, returnedStats) => {
 
-                    console.log(___________________________________________________)
+                    console.log("___________________________________________________")
                     console.log(returnedStats)
-                    console.log(___________________________________________________)
+                    console.log("___________________________________________________")
 
                     const statsObject = returnedStats.body
 
@@ -94,9 +95,9 @@ router.get("/user", function(req, res) { //brackets issue
 
                 request.get(achievementsURL, (err, returnedAchievements) => {
 
-                    console.log(___________________________________________________)
+                    console.log("___________________________________________________")
                     console.log(returnedAchievements)
-                    console.log(___________________________________________________)
+                    console.log("___________________________________________________")
 
                     const acheivementsObject = returnedAchievements.body
 
@@ -115,37 +116,37 @@ router.get("/user", function(req, res) { //brackets issue
                 })
 
                 //Create Game and add to DB
-                console.log(___________________________________________________)
-                console.log(gameObject.300.data.steam_appid)
-                console.log(gameObject.300.data.name)
+                console.log("___________________________________________________")
+                console.log(gameObject.gameID.data.steam_appid)
+                console.log(gameObject.gameID.data.name)
                 console.log(gameGenres)
-                console.log(gameObject.300.data.detailed_description)
-                console.log(gameObject.300.data.about_the_game)
-                console.log(gameObject.300.data.publishers[0])
+                console.log(gameObject.gameID.data.detailed_description)
+                console.log(gameObject.gameID.data.about_the_game)
+                console.log(gameObject.gameID.data.publishers[0])
                 console.log(gameMultiplayer)
-                console.log(gameObject.300.data.metacrititc.score)
-                console.log(gameObject.300.data.recommendations.total)
+                console.log(gameObject.gameID.data.metacrititc.score)
+                console.log(gameObject.gameID.data.recommendations.total)
                 console.log(playerAchievements)
                 console.log(playerStats)
-                console.log(gameObject.300.data.header_image)
+                console.log(gameObject.gameID.data.header_image)
                 console.log(gameScreenshots)
-                console.log(___________________________________________________)
+                console.log("___________________________________________________")
 
 
                 Library.create({
 
-                    gameID: gameObject.300.data.steam_appid,
-                    name: gameObject.300.data.name,
+                    gameID: gameObject.gameID.data.steam_appid,
+                    name: gameObject.gameID.data.name,
                     genres: gameGenres,
-                    description: gameObject.300.data.detailed_description,
-                    about: gameObject.300.data.about_the_game,
-                    publisher: gameObject.300.data.publishers[0],
+                    description: gameObject.gameID.data.detailed_description,
+                    about: gameObject.gameID.data.about_the_game,
+                    publisher: gameObject.gameID.data.publishers[0],
                     multiplayer: gameMultiplayer,
-                    score: gameObject.300.data.metacrititc.score,
-                    recommendations: gameObject.300.data.recommendations.total,
+                    score: gameObject.gameID.data.metacrititc.score,
+                    recommendations: gameObject.gameID.data.recommendations.total,
                     achievements: playerAchievements,
                     stats: playerStats,
-                    banner: gameObject.300.data.header_image,
+                    banner: gameObject.gameID.data.header_image,
                     screenshots: gameScreenshots
                 })
             })
@@ -155,28 +156,32 @@ router.get("/user", function(req, res) { //brackets issue
     //Friends Builder
 
     //Friends call
-    const friendsListURL = "http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key="+ process.env.API_KEY +"&steamid=76561197960434622&relationship=friend&format=json"
+    const friendsListURL = "http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key="+ process.env.API_KEY +"&steamid=76561197960434622&relationship=friend&format=json%22"
 
     request.get(friendsListURL, (err, returnedFriends) => {
 
-        console.log(___________________________________________________)
-        console.log(returned)
-        console.log(___________________________________________________)
+        console.log("___________________________________________________")
+        console.log(returnedFriends.body)
+        console.log("___________________________________________________")
 
-        const friendsListObject = returnedFriends.body
+        setTimeout(() => {
+
+            const friendsListObject = returnedFriends.body
+
+        }, 5000)
 
         for (let i = 0; i < friendsListObject.friendslist.friends.length - 1; i++){
 
             let friendObject
 
             //Friend data
-            const friendPLayerURL = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+ process.env.API_KEY +"&steamids="+ friendsListObject.friendslist.friends[i].steamid +"&format=json";
+            const friendPLayerURL = "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+ process.env.API_KEY +"&steamids="+ friendsListObject.friendslist.friends[i].steamid +"&format=json";
 
-            request.get(friendURL, returnedFriend) => {
+            request.get(friendURL, (err, returnedFriend) => {
 
                 friendObject = returnedFriend.body
 
-            }
+            })
 
 
 
@@ -185,7 +190,7 @@ router.get("/user", function(req, res) { //brackets issue
             let friendLibrary
             const friendLibaryObject = []
 
-            request.get(friendLibraryURL, returnedLibrary) => {
+            request.get(friendLibraryURL, (err, returnedLibrary) => {
 
                 friendLibrary = returnedLibrary
 
@@ -196,34 +201,34 @@ router.get("/user", function(req, res) { //brackets issue
 
                     request.get(gameURL, (err, returnedGame) => {
 
-                        console.log(___________________________________________________)
+                        console.log("___________________________________________________")
                         console.log(returnedGame)
-                        console.log(___________________________________________________)
+                        console.log("___________________________________________________")
 
                         const gameObject = returnedGame.body
 
-                        console.log(gameObject.300.data.name)
-                        console.log(gameObject.300.data.header_image)
+                        console.log(gameObject.gameID.data.name)
+                        console.log(gameObject.gameID.data.header_image)
 
 
                         friendLibraryObject.push({
 
-                            game: gameObject.300.data.name,
-                            banner: gameObject.300.data.header_image
+                            game: gameObject.gameID.data.name,
+                            banner: gameObject.gameID.data.header_image
 
                         })
 
                     })
                 }
-             }
+             })
 
             //Create Friend and add to DB
-            console.log(___________________________________________________)
+            console.log("___________________________________________________")
             console.log(friendsListObject.friendslist.friends[i].steamid)
             console.log(friendObject.repsonse.players[0].personaname)
             console.log(friendLibaryObject)
-            console.log(___________________________________________________)
-            
+            console.log("___________________________________________________")
+
             Friends.create({
 
                 steamID: friendsListObject.friendslist.friends[i].steamid,
@@ -236,20 +241,21 @@ router.get("/user", function(req, res) { //brackets issue
 
     //Player Builder
 
-    const playerURL = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+ process.env.API_KEY +"&steamids=76561197960434622&format=json"
+    const playerURL = "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+ process.env.API_KEY +"&steamids=76561197960434622&format=json"
 
-    request.get(playerURL, returnedPlayer) => {
+    request.get(playerURL, (err, returnedPlayer) => {
+        console.log(returnedPlayer.body)
         const playerObject = returnedPlayer.body
 
         //Create friend and add to DB
         Player.create({
 
-            steamID: playerObject.repsonse.players[0].steamid,
-            name: playerObject.repsonse.players[0].personaname,
-            avatar: playerObject.repsonse.players[0].avatarfull
+            steamID: playerObject.response.players[0].steamid,
+            name: playerObject.response.players[0].personaname,
+            avatar: playerObject.response.players[0].avatarfull
             //add friends key
         })
-    }  
+    } ) 
     res.send()
 });
 

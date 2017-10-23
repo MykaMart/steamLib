@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const Library = require('./libraryPlayer');
-const Friend = require('./friends');
+const Library = require('./libraryModel');
+const Friends = require('./friendsModel');
 
 const playerSchema = new mongoose.Schema({
 steamID: String, //we will be using the id numbers to concatenate urls
